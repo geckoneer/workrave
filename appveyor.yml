@@ -1,0 +1,35 @@
+version: "{build} ({branch})"
+
+clone_depth: 10
+
+platform: x86
+configuration: Debug
+
+
+init:
+  - echo Building %CONFIGURATION% configuration for platform %PLATFORM%
+  - set PATH=C:\msys64\usr\bin;C:\msys64\mingw32\bin;%PATH%
+  - set PKG_CONFIG_PATH=C:\Qt\5.3\mingw482_32\lib\pkgconfig
+  - set CMAKE_PREFIX_PATH=C:\Qt\5.3\mingw482_32
+
+
+#before_build:
+#  - mkdir deps
+#  - cd dependencies
+#  - ps: wget http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip -OutFile pkg-config_0.26-1_win32.zip
+#  - ps: wget http://ftp.acc.umu.se/pub/gnome/binaries/win32/glib/2.28/glib_2.28.8-1_win32.zip -OutFile glib_2.28.8-1_win32.zip
+#  - ps: wget http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime_0.18.1.1-2_win32.zip -OutFile gettext-runtime_0.18.1.1-2_win32.zip
+#  - 7z x -aoa -oC:\MinGW -x!manifest pkg-config_0.26-1_win32.zip
+#  - 7z x -aoa -oC:\MinGW -x!manifest glib_2.28.8-1_win32.zip
+#  - 7z x -aoa -oC:\MinGW -x!manifest gettext-runtime_0.18.1.1-2_win32.zip
+#  - rmdir /s /q dependencies
+
+build_script:
+  - mkdir cmake-build
+  - cd cmake-build
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#  - cmake .. -DWITH_UI=Qt5 -G "MinGW Makefiles"
+
+
+
+
